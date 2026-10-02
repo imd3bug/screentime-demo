@@ -157,8 +157,10 @@
     column.addEventListener('pointercancel', () => { drag = null; });
     column.addEventListener('click', event => {
       if (Date.now() < suppressClickUntil) return;
-      const row = event.target.closest('.wheel-row');
-      if (row) changeWheel(field, Number(row.dataset.offset));
+      // Pointer capture retargets the click to the column, so resolve the row under the pointer.
+      const direct = event.target instanceof Element ? event.target.closest('.wheel-row') : null;
+      const row = direct || document.elementFromPoint(event.clientX, event.clientY)?.closest('.wheel-row');
+      if (row && column.contains(row)) changeWheel(field, Number(row.dataset.offset));
     });
     column.addEventListener('keydown', event => {
       const steps = {ArrowDown: 1, ArrowUp: -1, PageDown: 5, PageUp: -5}[event.key];
