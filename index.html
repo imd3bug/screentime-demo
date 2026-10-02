@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Screentime to Cash demo. Confirm your age, pick a birthday, and walk through the enrollment screens.">
+  <script>!function(w){w.maxconv=w.maxconv||function(){(w.maxconv.q=w.maxconv.q||[]).push(arguments)};}(window);</script>
+  <title>Screentime to Cash</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/tracking.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="workspace">
+    <main class="phone" data-active-screen="age" aria-label="Screentime to Cash">
+      <section class="screen active" data-screen="age" aria-label="Confirm your age">
+        <img src="/assets/02-confirm-age.jpg" alt="Confirm your age screen" draggable="false">
+        <button class="hotspot" style="--left:38%;--top:60%;--width:26%;--height:4.5%" data-action="learn" aria-label="Learn more" type="button"></button>
+        <button class="hotspot" style="--left:6%;--top:84%;--width:88%;--height:6.5%" data-go="birthday" aria-label="Confirm age" type="button"></button>
+        <button class="hotspot" style="--left:6%;--top:91.5%;--width:88%;--height:6.5%" data-go="waiting" aria-label="Ask me later" type="button"></button>
+      </section>
+
+      <section class="screen" data-screen="birthday" aria-label="Birthday" hidden>
+        <img src="/assets/03-birthday.jpg" alt="Birthday picker screen" draggable="false">
+        <button class="date-patch" id="date-patch" data-action="edit-date" aria-label="Choose birthday" type="button">January 17, 2000</button>
+        <div class="wheel-picker" id="wheel-picker" role="group" aria-label="Scroll to select your birthday">
+          <div class="wheel-highlight" aria-hidden="true"></div>
+          <div class="wheel-column" data-wheel="month" role="spinbutton" tabindex="0" aria-label="Month"></div>
+          <div class="wheel-column" data-wheel="day" role="spinbutton" tabindex="0" aria-label="Day"></div>
+          <div class="wheel-column" data-wheel="year" role="spinbutton" tabindex="0" aria-label="Year"></div>
+        </div>
+        <button class="hotspot" style="--left:6%;--top:82.7%;--width:88%;--height:7%" data-action="confirm-date" aria-label="Confirm birthday" type="button"></button>
+      </section>
+
+      <section class="screen" data-screen="selected" aria-label="Selected" hidden>
+        <img src="/assets/01-selected.jpg" alt="Selected program screen" draggable="false">
+        <button class="hotspot" style="--left:6%;--top:84%;--width:88%;--height:6.5%" data-go="steps" aria-label="Start now" type="button"></button>
+        <button class="hotspot" style="--left:6%;--top:91.5%;--width:88%;--height:6.5%" data-go="waiting" aria-label="Ask me later" type="button"></button>
+      </section>
+
+      <section class="screen" data-screen="steps" aria-label="Final steps" hidden>
+        <img src="/assets/04-final-steps.jpg" alt="Final steps screen" draggable="false">
+        <a id="cta-link" class="hotspot" style="--left:6%;--top:84%;--width:88%;--height:6.5%" href="https://giftclick.org/aff_c?offer_id=4439&amp;aff_id=17554" aria-label="I'm ready — open partner offer"></a>
+      </section>
+
+      <section class="screen" data-screen="waiting" aria-label="Waiting for notification" hidden>
+        <img src="/assets/05-waiting-notification.jpg" alt="Waiting screen with sample notification" draggable="false">
+        <div class="notification-cover" id="notification-cover" aria-hidden="true"></div>
+        <div class="spinner-cover" aria-hidden="true"><div class="spinner-ring"></div></div>
+        <p class="waiting-copy">You will receive a notification once you have been enrolled.</p>
+        <button class="hotspot" id="notification-button" style="--left:1.5%;--top:8%;--width:97%;--height:9%" data-go="selected" aria-label="Open sample notification" type="button" hidden></button>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="date-dialog" aria-labelledby="date-dialog-title">
+    <form method="dialog" id="date-form">
+      <h2 id="date-dialog-title">Choose your birthday</h2>
+      <p>Select your date of birth. It stays in this browser and is only used to check that you are at least 13.</p>
+      <label for="birthday-input">Birthday</label>
+      <input id="birthday-input" name="birthday" type="date" required autocomplete="bday">
+      <p id="date-error" class="error" role="alert" aria-live="polite"></p>
+      <div class="dialog-actions">
+        <button value="cancel" type="button" id="cancel-date">Cancel</button>
+        <button value="save" type="submit" id="save-date">Save date</button>
+        <button type="button" id="restart-age" hidden>Start over</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="learn-dialog" aria-labelledby="learn-dialog-title">
+    <h2 id="learn-dialog-title">About this step</h2>
+    <p>Enter your birthday to continue. Your date stays on this page and is not sent anywhere.</p>
+    <button type="button" id="close-learn">Close</button>
+  </dialog>
+  <p class="sr-only" id="screen-status" aria-live="polite"></p>
+</body>
+</html>
